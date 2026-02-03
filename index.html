@@ -13,7 +13,7 @@ body{
   justify-content:center;
   align-items:center;
   background:linear-gradient(135deg,#ff758c,#ff7eb3);
-  font-family:system-ui,Arial;
+  font-family:system-ui, Arial, sans-serif;
   overflow:hidden;
 }
 
@@ -21,7 +21,7 @@ body{
   background:#fff;
   width:90%;
   max-width:360px;
-  padding:25px;
+  padding:25px 20px 35px;
   border-radius:22px;
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.25);
@@ -30,12 +30,12 @@ body{
 
 h1{
   font-size:24px;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
 
 .buttons{
   position:relative;
-  height:110px;
+  height:120px;
 }
 
 button{
@@ -49,17 +49,16 @@ button{
 
 #yes{
   background:#4CAF50;
-  color:white;
+  color:#fff;
   animation:pulse 1.6s infinite;
 }
 
 #no{
   background:#f44336;
-  color:white;
+  color:#fff;
   position:absolute;
   left:55%;
   top:0;
-  transition:all .25s ease;
 }
 
 @keyframes pulse{
@@ -114,6 +113,7 @@ button{
 
 <div class="card" id="card">
   <h1>Will you marry me? 💖</h1>
+
   <div class="buttons">
     <button id="yes">Yes 😍</button>
     <button id="no">No 🙃</button>
@@ -123,17 +123,37 @@ button{
 <script>
 const noBtn = document.getElementById("no");
 
-function moveNo(){
-  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-  noBtn.style.left = Math.random()*maxX + "px";
-  noBtn.style.top  = Math.random()*maxY + "px";
+/* MOVE NO EVERY SINGLE TOUCH ATTEMPT */
+function moveNo(e){
+  e.preventDefault();
+
+  const padding = 10;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+
+  // quick movement animation
+  noBtn.animate(
+    [
+      { transform: "scale(1) rotate(0deg)" },
+      { transform: "scale(1.15) rotate(10deg)" },
+      { transform: "scale(1) rotate(0deg)" }
+    ],
+    { duration: 180 }
+  );
 }
 
-noBtn.addEventListener("touchstart",moveNo);
-noBtn.addEventListener("click",moveNo);
+/* MOBILE-FIRST: fires BEFORE click */
+noBtn.addEventListener("pointerdown", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
 
-document.getElementById("yes").addEventListener("click",()=>{
+/* YES CELEBRATION */
+document.getElementById("yes").addEventListener("click", () => {
   document.body.innerHTML = `
     <div class="celebrate">
       <div class="love">I LOVE YOU BEBS ALWAYS 😘</div>
@@ -141,7 +161,7 @@ document.getElementById("yes").addEventListener("click",()=>{
     </div>
   `;
 
-  const emojis=["🎉","💖","🥳","✨","💍"];
+  const emojis = ["🎉","💖","🥳","✨","💍"];
   for(let i=0;i<30;i++){
     const c=document.createElement("div");
     c.className="confetti";
