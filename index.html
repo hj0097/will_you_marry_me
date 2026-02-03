@@ -35,7 +35,7 @@
 
     .buttons {
       position: relative;
-      height: 90px;
+      height: 100px;
     }
 
     button {
@@ -50,7 +50,7 @@
     #yes {
       background: #4CAF50;
       color: white;
-      animation: pulse 1.8s infinite;
+      animation: pulse 1.6s infinite;
     }
 
     #no {
@@ -59,31 +59,71 @@
       position: absolute;
       left: 55%;
       top: 0;
-      transition: transform 0.15s;
+      transition: all 0.25s ease;
     }
 
     /* Animations */
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
 
     @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
+      from { transform: scale(0.7); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
+    .spin {
+      transform: rotate(360deg) scale(0.9);
+    }
+
     .shake {
-      animation: shake 0.2s;
+      animation: shake 0.25s;
     }
 
     @keyframes shake {
       0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-4px); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(8px); }
+      75% { transform: translateX(-6px); }
       100% { transform: translateX(0); }
+    }
+
+    /* Celebration */
+    .celebrate {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #ffe6f0, #ffb6c1);
+      text-align: center;
+      animation: popIn 0.6s ease;
+    }
+
+    .love {
+      font-size: 30px;
+      font-weight: bold;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    .confetti {
+      position: fixed;
+      font-size: 22px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-100vh); }
+      to { transform: translateY(100vh); }
     }
   </style>
 </head>
@@ -112,37 +152,37 @@
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
 
-      // Shrink slightly every escape
-      const currentScale = noBtn.style.transform.match(/scale\(([^)]+)\)/);
-      let scale = currentScale ? parseFloat(currentScale[1]) : 1;
-      scale = Math.max(scale - 0.05, 0.6);
-      noBtn.style.transform = `scale(${scale})`;
-
-      // Card shake
+      noBtn.classList.add("spin");
       card.classList.add("shake");
-      setTimeout(() => card.classList.remove("shake"), 200);
+
+      setTimeout(() => {
+        noBtn.classList.remove("spin");
+        card.classList.remove("shake");
+      }, 250);
     }
 
-    // Mobile + desktop
+    // Move NO every single attempt
     noBtn.addEventListener("touchstart", moveNo);
     noBtn.addEventListener("click", moveNo);
 
     document.getElementById("yes").addEventListener("click", () => {
       document.body.innerHTML = `
-        <div style="
-          height:100vh;
-          display:flex;
-          flex-direction:column;
-          justify-content:center;
-          align-items:center;
-          background:#ffe6f0;
-          text-align:center;
-          font-family:system-ui;
-          animation: popIn 0.6s;">
-          <h1>She said YES! 🎉💍</h1>
-          <p>Screenshot this. Evidence secured 😌</p>
+        <div class="celebrate">
+          <div class="love">I LOVE YOU BEBS ALWAYS 😘</div>
+          <p style="font-size:22px;">🥳🎉💖</p>
         </div>
       `;
+
+      // Confetti emojis
+      const emojis = ["🎉","💖","🥳","✨","💍"];
+      for (let i = 0; i < 25; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(conf);
+      }
     });
   </script>
 
