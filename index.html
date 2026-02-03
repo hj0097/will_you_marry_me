@@ -1,190 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One Question 💍</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Question 💍</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: system-ui, Arial, sans-serif;
-      overflow: hidden;
-    }
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  font-family:system-ui,Arial;
+  overflow:hidden;
+}
 
-    .card {
-      background: white;
-      width: 90%;
-      max-width: 360px;
-      padding: 25px 20px 35px;
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-      animation: popIn 0.6s ease;
-    }
+.card{
+  background:#fff;
+  width:90%;
+  max-width:360px;
+  padding:25px;
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  animation:pop .6s ease;
+}
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 30px;
-    }
+h1{
+  font-size:24px;
+  margin-bottom:25px;
+}
 
-    .buttons {
-      position: relative;
-      height: 100px;
-    }
+.buttons{
+  position:relative;
+  height:110px;
+}
 
-    button {
-      padding: 14px 22px;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      user-select: none;
-    }
+button{
+  padding:14px 24px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  user-select:none;
+}
 
-    #yes {
-      background: #4CAF50;
-      color: white;
-      animation: pulse 1.6s infinite;
-    }
+#yes{
+  background:#4CAF50;
+  color:white;
+  animation:pulse 1.6s infinite;
+}
 
-    #no {
-      background: #f44336;
-      color: white;
-      position: absolute;
-      left: 55%;
-      top: 0;
-      transition: all 0.25s ease;
-    }
+#no{
+  background:#f44336;
+  color:white;
+  position:absolute;
+  left:55%;
+  top:0;
+  transition:all .25s ease;
+}
 
-    /* Animations */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
 
-    @keyframes popIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+@keyframes pop{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 
-    .spin {
-      transform: rotate(360deg) scale(0.9);
-    }
+/* Celebration */
+.celebrate{
+  height:100vh;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:radial-gradient(circle,#ffe6f0,#ffb6c1);
+}
 
-    .shake {
-      animation: shake 0.25s;
-    }
+.love{
+  font-size:30px;
+  font-weight:700;
+  animation:bounce 1s infinite;
+}
 
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      50% { transform: translateX(8px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
-    }
+@keyframes bounce{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+  100%{transform:translateY(0)}
+}
 
-    /* Celebration */
-    .celebrate {
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle, #ffe6f0, #ffb6c1);
-      text-align: center;
-      animation: popIn 0.6s ease;
-    }
+.confetti{
+  position:fixed;
+  font-size:22px;
+  animation:fall 3s linear infinite;
+}
 
-    .love {
-      font-size: 30px;
-      font-weight: bold;
-      animation: bounce 1s infinite;
-    }
-
-    @keyframes bounce {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0); }
-    }
-
-    .confetti {
-      position: fixed;
-      font-size: 22px;
-      animation: fall 3s linear infinite;
-    }
-
-    @keyframes fall {
-      from { transform: translateY(-100vh); }
-      to { transform: translateY(100vh); }
-    }
-  </style>
+@keyframes fall{
+  from{transform:translateY(-100vh)}
+  to{transform:translateY(100vh)}
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card" id="card">
-    <h1>Will you marry me? 💖</h1>
-
-    <div class="buttons">
-      <button id="yes">Yes 😍</button>
-      <button id="no">No 🙃</button>
-    </div>
+<div class="card" id="card">
+  <h1>Will you marry me? 💖</h1>
+  <div class="buttons">
+    <button id="yes">Yes 😍</button>
+    <button id="no">No 🙃</button>
   </div>
+</div>
 
-  <script>
-    const noBtn = document.getElementById("no");
-    const card = document.getElementById("card");
+<script>
+const noBtn = document.getElementById("no");
 
-    function moveNo() {
-      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+function moveNo(){
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+  noBtn.style.left = Math.random()*maxX + "px";
+  noBtn.style.top  = Math.random()*maxY + "px";
+}
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+noBtn.addEventListener("touchstart",moveNo);
+noBtn.addEventListener("click",moveNo);
 
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+document.getElementById("yes").addEventListener("click",()=>{
+  document.body.innerHTML = `
+    <div class="celebrate">
+      <div class="love">I LOVE YOU BEBS ALWAYS 😘</div>
+      <div style="font-size:26px;margin-top:10px;">🥳🎉💖</div>
+    </div>
+  `;
 
-      noBtn.classList.add("spin");
-      card.classList.add("shake");
-
-      setTimeout(() => {
-        noBtn.classList.remove("spin");
-        card.classList.remove("shake");
-      }, 250);
-    }
-
-    // Move NO every single attempt
-    noBtn.addEventListener("touchstart", moveNo);
-    noBtn.addEventListener("click", moveNo);
-
-    document.getElementById("yes").addEventListener("click", () => {
-      document.body.innerHTML = `
-        <div class="celebrate">
-          <div class="love">I LOVE YOU BEBS ALWAYS 😘</div>
-          <p style="font-size:22px;">🥳🎉💖</p>
-        </div>
-      `;
-
-      // Confetti emojis
-      const emojis = ["🎉","💖","🥳","✨","💍"];
-      for (let i = 0; i < 25; i++) {
-        const conf = document.createElement("div");
-        conf.className = "confetti";
-        conf.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        conf.style.left = Math.random() * 100 + "vw";
-        conf.style.animationDuration = (2 + Math.random() * 3) + "s";
-        document.body.appendChild(conf);
-      }
-    });
-  </script>
+  const emojis=["🎉","💖","🥳","✨","💍"];
+  for(let i=0;i<30;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDuration=(2+Math.random()*3)+"s";
+    document.body.appendChild(c);
+  }
+});
+</script>
 
 </body>
 </html>
