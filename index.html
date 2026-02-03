@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One Serious Question 💍</title>
+  <title>One Question 💍</title>
 
   <style>
     body {
@@ -21,33 +21,36 @@
       background: white;
       width: 90%;
       max-width: 360px;
-      padding: 25px 20px;
-      border-radius: 20px;
+      padding: 25px 20px 35px;
+      border-radius: 22px;
       text-align: center;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: popIn 0.6s ease;
     }
 
     h1 {
       font-size: 24px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     .buttons {
       position: relative;
-      height: 80px;
+      height: 90px;
     }
 
     button {
       padding: 14px 22px;
       font-size: 18px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
+      user-select: none;
     }
 
     #yes {
       background: #4CAF50;
       color: white;
+      animation: pulse 1.8s infinite;
     }
 
     #no {
@@ -56,22 +59,48 @@
       position: absolute;
       left: 55%;
       top: 0;
+      transition: transform 0.15s;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .shake {
+      animation: shake 0.2s;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
+  <div class="card" id="card">
     <h1>Will you marry me? 💖</h1>
 
     <div class="buttons">
       <button id="yes">Yes 😍</button>
-      <button id="no">No 😅</button>
+      <button id="no">No 🙃</button>
     </div>
   </div>
 
   <script>
     const noBtn = document.getElementById("no");
+    const card = document.getElementById("card");
 
     function moveNo() {
       const maxX = window.innerWidth - noBtn.offsetWidth - 20;
@@ -82,8 +111,19 @@
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
+
+      // Shrink slightly every escape
+      const currentScale = noBtn.style.transform.match(/scale\(([^)]+)\)/);
+      let scale = currentScale ? parseFloat(currentScale[1]) : 1;
+      scale = Math.max(scale - 0.05, 0.6);
+      noBtn.style.transform = `scale(${scale})`;
+
+      // Card shake
+      card.classList.add("shake");
+      setTimeout(() => card.classList.remove("shake"), 200);
     }
 
+    // Mobile + desktop
     noBtn.addEventListener("touchstart", moveNo);
     noBtn.addEventListener("click", moveNo);
 
@@ -97,9 +137,10 @@
           align-items:center;
           background:#ffe6f0;
           text-align:center;
-          font-family:system-ui;">
+          font-family:system-ui;
+          animation: popIn 0.6s;">
           <h1>She said YES! 🎉💍</h1>
-          <p>Screenshot this. Evidence matters 😌</p>
+          <p>Screenshot this. Evidence secured 😌</p>
         </div>
       `;
     });
