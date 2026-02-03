@@ -17,6 +17,7 @@ body{
   overflow:hidden;
 }
 
+/* Card */
 .card{
   background:#fff;
   width:90%;
@@ -33,9 +34,10 @@ h1{
   margin-bottom:30px;
 }
 
+/* Buttons container only for YES */
 .buttons{
   position:relative;
-  height:120px;
+  height:80px;
 }
 
 button{
@@ -47,20 +49,24 @@ button{
   user-select:none;
 }
 
+/* YES button */
 #yes{
   background:#4CAF50;
   color:#fff;
   animation:pulse 1.6s infinite;
 }
 
+/* NO button — FIXED POSITION */
 #no{
   background:#f44336;
   color:#fff;
-  position:absolute;
-  left:55%;
-  top:0;
+  position:fixed; /* IMPORTANT */
+  left:60%;
+  top:60%;
+  z-index:9999;
 }
 
+/* Animations */
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.1)}
@@ -111,48 +117,54 @@ button{
 
 <body>
 
-<div class="card" id="card">
+<div class="card">
   <h1>Will you marry me? 💖</h1>
-
   <div class="buttons">
     <button id="yes">Yes 😍</button>
-    <button id="no">No 🙃</button>
   </div>
 </div>
+
+<!-- NO button OUTSIDE the card -->
+<button id="no">No 🙃</button>
 
 <script>
 const noBtn = document.getElementById("no");
 
-/* MOVE NO EVERY SINGLE TOUCH ATTEMPT */
-function moveNo(e){
-  e.preventDefault();
+/* GUARANTEED ON-SCREEN MOVEMENT */
+function moveNo(){
+  const padding = 12;
 
-  const padding = 10;
-  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const btnW = noBtn.offsetWidth;
+  const btnH = noBtn.offsetHeight;
+
+  const maxX = vw - btnW - padding;
+  const maxY = vh - btnH - padding;
 
   const x = Math.random() * maxX;
   const y = Math.random() * maxY;
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top  = y + "px";
+  noBtn.style.left = Math.max(padding, x) + "px";
+  noBtn.style.top  = Math.max(padding, y) + "px";
 
-  // quick movement animation
+  // visual feedback
   noBtn.animate(
     [
-      { transform: "scale(1) rotate(0deg)" },
-      { transform: "scale(1.15) rotate(10deg)" },
-      { transform: "scale(1) rotate(0deg)" }
+      { transform: "scale(1)" },
+      { transform: "scale(1.15)" },
+      { transform: "scale(1)" }
     ],
-    { duration: 180 }
+    { duration: 160 }
   );
 }
 
-/* MOBILE-FIRST: fires BEFORE click */
+/* MOVE ON EVERY ATTEMPT */
 noBtn.addEventListener("pointerdown", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseenter", moveNo);
 
-/* YES CELEBRATION */
+/* YES ACTION */
 document.getElementById("yes").addEventListener("click", () => {
   document.body.innerHTML = `
     <div class="celebrate">
